@@ -6,6 +6,13 @@
 #define SYMB 1 // symbols
 #define MDIA 2 // media keys
 
+
+enum { 
+  TD_TILD = 0,
+  TD_LBRC,
+  TD_RBRC
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
  *
@@ -30,11 +37,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 /*
  * hold F/A/J/; - should reverse
- * hold l1/l2:  - work as expected
- * tap l1/l2:   - next keypress should be on that layer
- *
- * double tap `~: press ~
- * double tap brace: curly
  *
  * media layers
  *
@@ -49,11 +51,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [BASE] = KEYMAP(  // layer 0 : default
   // left hand
-  KC_ESC,     KC_1,    KC_2,     KC_3,     KC_4,          KC_5,  KC_GRV,
-  KC_TAB,     KC_Q,    KC_W,     KC_E,     KC_R,          KC_T,  KC_LBRC,
+  KC_ESC,     KC_1,    KC_2,     KC_3,     KC_4,          KC_5,  TD(TD_TILD),
+  KC_TAB,     KC_Q,    KC_W,     KC_E,     KC_R,          KC_T,  TD(TD_LBRC),
   KC_LCTL,    KC_A,    KC_S,     KC_D,     KC_F,          KC_G,
-  KC_LSFT,    KC_Z,    KC_X,     KC_C,     KC_V,          KC_B,  MO(1),
-  MO(2),      KC_NO,   KC_LGUI,  KC_LALT,  KC_LCTRL,
+  KC_LSFT,    KC_Z,    KC_X,     KC_C,     KC_V,          KC_B,  KC_FN1,
+  KC_FN2,      KC_NO,   KC_LGUI,  KC_LALT,  KC_LCTRL,
 
                                                KC_ESC,    KC_LCTRL,
                                                           KC_LALT,
@@ -61,10 +63,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // right hand
   KC_EQL,  KC_6,     KC_7,     KC_8,     KC_9,     KC_0,      KC_MINS,
-  KC_RBRC, KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,      KC_BSLS,
+  TD(TD_RBRC), KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,      KC_BSLS,
            KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,   KC_QUOT,
-  MO(1),   KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,   KC_RSFT,
-                     KC_RCTRL, KC_RALT,  KC_RGUI,  KC_NO,   MO(2),
+  KC_FN1,   KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,   KC_RSFT,
+                     KC_RCTRL, KC_RALT,  KC_RGUI,  KC_NO,   KC_FN2,
 
   KC_RCTRL, KC_ESC,
   KC_RALT,
@@ -159,8 +161,15 @@ KEYMAP(
 };
 
 const uint16_t PROGMEM fn_actions[] = {
-    [1] = ACTION_LAYER_TAP_TOGGLE(SYMB)                // FN1 - Momentary Layer 1 (Symbols)
+    [1] = ACTION_LAYER_ONESHOT(SYMB),               // FN1 - Hold for normal. tap = next press is (Symbol)
+    [2] = ACTION_LAYER_ONESHOT(MDIA)                // FN2 - Hold for normal. tap = next press is (Media)
 };
+
+qk_tap_dance_action_t tap_dance_actions[] = { 
+  [TD_TILD] = ACTION_TAP_DANCE_DOUBLE(KC_GRAVE, KC_TILD),
+  [TD_LBRC] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_LCBR),
+  [TD_RBRC] = ACTION_TAP_DANCE_DOUBLE(KC_RBRC, KC_RCBR) 
+}; 
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
@@ -203,5 +212,4 @@ void matrix_scan_user(void) {
             // none
             break;
     }
-
 };
