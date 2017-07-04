@@ -5,6 +5,7 @@
 #define BASE 0 // default layer
 #define SYMB 1 // symbols
 #define MDIA 2 // media keys
+#define FLIP 3 // flip the keyboard
 
 
 enum { 
@@ -36,9 +37,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                               `---------------------'   `---------------------'
  */
 /*
- * hold F/A/J/; - should reverse
- * more accessible lgui
- *
  * media layers
  *
  * shortcuts:
@@ -52,26 +50,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [BASE] = KEYMAP(  // layer 0 : default
   // left hand
-  KC_ESC,     KC_1,    KC_2,     KC_3,     KC_4,          KC_5,  TD(TD_TILD),
-  KC_TAB,     KC_Q,    KC_W,     KC_E,     KC_R,          KC_T,  TD(TD_LBRC),
-  KC_LCTL,    KC_A,    KC_S,     KC_D,     KC_F,          KC_G,
-  KC_LSFT,    KC_Z,    KC_X,     KC_C,     KC_V,          KC_B,  KC_FN1,
-  KC_FN2,     KC_NO,   KC_LALT,  KC_LCTRL, KC_LGUI,
+  KC_ESC,     KC_1,           KC_2,     KC_3,     KC_4,           KC_5,  TD(TD_TILD),
+  KC_TAB,     KC_Q,           KC_W,     KC_E,     KC_R,           KC_T,  TD(TD_LBRC),
+  KC_LCTL,    LT(FLIP, KC_A), KC_S,     KC_D,     LT(FLIP, KC_F), KC_G,
+  KC_LSFT,    KC_Z,           KC_X,     KC_C,     KC_V,           KC_B,  KC_FN1,
+  KC_FN2,     KC_NO,          KC_LALT,  KC_LCTRL, KC_LGUI,
 
-                                               KC_ESC,    KC_LCTRL,
-                                                          KC_LALT,
-                                     KC_BSPC,  KC_DEL,    KC_LCTRL,
+                                                                KC_ESC,  KC_LCTRL,
+                                                                         KC_LALT,
+                                                      KC_BSPC,  KC_DEL,  KC_LCTRL,
 
   // right hand
-  KC_EQL,  KC_6,     KC_7,     KC_8,     KC_9,     KC_0,      KC_MINS,
-  TD(TD_RBRC), KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,      KC_BSLS,
-           KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,   KC_QUOT,
-  KC_FN1,   KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,   KC_RSFT,
-                     KC_RGUI, KC_RALT,  KC_RCTRL,  KC_NO,   KC_FN2,
+  KC_EQL,      KC_6,     KC_7,           KC_8,     KC_9,     KC_0,              KC_MINS,
+  TD(TD_RBRC), KC_Y,     KC_U,           KC_I,     KC_O,     KC_P,              KC_BSLS,
+               KC_H,     LT(FLIP, KC_J), KC_K,     KC_L,     LT(FLIP, KC_SCLN), KC_QUOT,
+  KC_FN1,      KC_N,     KC_M,           KC_COMM,  KC_DOT,   KC_SLSH,           KC_RSFT,
+                         KC_RGUI,        KC_RCTRL, KC_RALT,  KC_NO,             KC_FN2,
 
-  KC_RCTRL, KC_ESC,
+  KC_RCTRL,    KC_ESC,
   KC_RALT,
-  KC_RCTRL,  KC_ENT,  KC_SPC
+  KC_RCTRL,    KC_ENT,   KC_SPC
 ),
 /* Keymap 1: Symbol Layer
  *
@@ -84,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |      | PgDn |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |      |      |      |      |      |
+ *   |      |      |      |      |   =  |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
@@ -101,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_GRAVE, KC_EXLM,  KC_AT,    KC_LCBR,  KC_RCBR,  KC_PIPE,  KC_TRNS,
        KC_TRNS,  KC_HASH,  KC_DLR,   KC_LPRN,  KC_RPRN,  KC_AMPR,
        KC_TRNS,  KC_PERC,  KC_CIRC,  KC_LBRC,  KC_RBRC,  KC_TILD,  KC_TRNS,
-       KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  
+       KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_EQL,  
 
                                      KC_TRNS,  KC_TRNS,
                                                KC_TRNS,
@@ -143,8 +141,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 KEYMAP(
          RESET, KC_TRNS,     KC_TRNS,  KC_TRNS,     KC_TRNS, KC_TRNS,    KC_TRNS,
        KC_TRNS, KC_TRNS,     KC_MS_U,  KC_TRNS,     KC_BTN1, LGUI(KC_T), KC_TRNS,
-       KC_TRNS, KC_MS_L,     KC_MS_D,  KC_MS_R,     KC_MS_D, KC_MS_R,
-       KC_TRNS, KC_TRNS,     KC_TRNS,  KC_TRNS,     KC_TRNS, KC_TRNS,    KC_TRNS,
+       KC_WH_U, KC_MS_L,     KC_MS_D,  KC_MS_R,     KC_MS_D, KC_MS_R,
+       KC_WH_D, KC_TRNS,     KC_TRNS,  KC_TRNS,     KC_TRNS, KC_TRNS,    KC_TRNS,
        KC_TRNS, KC_TRNS,     KC_TRNS,  KC_TRNS,     KC_TRNS,
                                            KC_TRNS, KC_TRNS,
                                                     KC_TRNS,
@@ -159,6 +157,29 @@ KEYMAP(
        KC_TRNS,
        KC_TRNS,  KC_WBAK, KC_WFWD
 ),
+
+[FLIP] = KEYMAP(
+  KC_MINS,    KC_6,              KC_7,     KC_8,     KC_9,           KC_0,  KC_EQL,
+  KC_BSLS,    KC_P,              KC_O,     KC_I,     KC_U,           KC_Y,  TD(TD_RBRC),
+  KC_QUOT,    LT(FLIP, KC_SCLN), KC_L,     KC_K,     LT(FLIP, KC_J), KC_H,
+  KC_RSFT,    KC_SLSH,           KC_DOT,   KC_COMM,  KC_M,           KC_N,  KC_FN1,
+  KC_FN2,     KC_NO,             KC_LALT,  KC_LCTRL, KC_LGUI,
+
+                                                                   KC_ESC,  KC_LCTRL,
+                                                                            KC_LALT,
+                                                          KC_SPC,  KC_ENT,  KC_LCTRL,
+
+  // right hand
+  TD(TD_TILD), KC_1,     KC_2,           KC_3,     KC_4,     KC_5,           KC_ESC,
+  TD(TD_LBRC), KC_T,     KC_R,           KC_E,     KC_W,     KC_Q,           KC_TAB,
+               KC_G,     LT(FLIP, KC_F), KC_D,     KC_S,     LT(FLIP, KC_A), KC_LCTL,
+  KC_FN1,      KC_B,     KC_V,           KC_C,     KC_X,     KC_Z,           KC_LSFT,
+                         KC_RGUI,        KC_RALT,  KC_RCTRL, KC_NO,          KC_FN2,
+
+  KC_LCTRL,    KC_ESC,
+  KC_LALT,
+  KC_LCTRL,    KC_BSPC,  KC_DEL
+    )
 };
 
 const uint16_t PROGMEM fn_actions[] = {
