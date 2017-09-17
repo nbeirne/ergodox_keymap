@@ -1,3 +1,4 @@
+
 TAP_DANCE_ENABLE=yes
 
 ifndef QUANTUM_DIR

@@ -1,6 +1,7 @@
-#include "ergodox.h"
+#include "ergodox_ez.h"
 #include "debug.h"
 #include "action_layer.h"
+#include "action_tapping.h" 
 
 #define BASE 0 // default layer
 #define SYMB 1 // symbols
@@ -32,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                      |  Esc  | Ctrl |   | Ctrl |  Esc  |
  *                               ,------|-------|------|   |------+-------+------.
  *                               |      |       |  Alt |   | Alt  |       |      |
- *                               | Bksp |  Del  |------|   |------| Enter |Space |
+ *                               |  Ent | Bksp  |------|   |------|  Del  | Spc  |
  *                               |      |       | Ctrl |   | Ctrl |       |      |
  *                               `---------------------'   `---------------------'
  */
@@ -54,56 +55,56 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,     KC_Q,           KC_W,     KC_E,     KC_R,           KC_T,  TD(TD_LBRC),
   KC_LCTL,    LT(FLIP, KC_A), KC_S,     KC_D,     LT(FLIP, KC_F), KC_G,
   KC_LSFT,    KC_Z,           KC_X,     KC_C,     KC_V,           KC_B,  KC_FN1,
-  KC_FN2,     KC_NO,          KC_LALT,  KC_LCTRL, KC_LGUI,
+  KC_FN2,     KC_FN1,         KC_LALT,  KC_LCTRL, KC_LGUI,
 
                                                                 KC_ESC,  KC_LCTRL,
                                                                          KC_LALT,
-                                                      KC_BSPC,  KC_DEL,  KC_LCTRL,
+                                                       KC_ENT,  KC_BSPC, KC_LCTRL,
 
   // right hand
   KC_EQL,      KC_6,     KC_7,           KC_8,     KC_9,     KC_0,              KC_MINS,
   TD(TD_RBRC), KC_Y,     KC_U,           KC_I,     KC_O,     KC_P,              KC_BSLS,
                KC_H,     LT(FLIP, KC_J), KC_K,     KC_L,     LT(FLIP, KC_SCLN), KC_QUOT,
   KC_FN1,      KC_N,     KC_M,           KC_COMM,  KC_DOT,   KC_SLSH,           KC_RSFT,
-                         KC_RGUI,        KC_RCTRL, KC_RALT,  KC_NO,             KC_FN2,
+                         KC_RGUI,        KC_RCTRL, KC_RALT,  KC_FN1,            KC_FN2,
 
   KC_RCTRL,    KC_ESC,
   KC_RALT,
-  KC_RCTRL,    KC_ENT,   KC_SPC
+  KC_RCTRL,    KC_DEL,  KC_SPC
 ),
 /* Keymap 1: Symbol Layer
  *
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |   ~    |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |   `    |   !  |   @  |   {  |   }  |   |  |      |           |      | Home | PgUp |  End |      |      |   F12  |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |   #  |   $  |   (  |   )  |   &  |------|           |------| Left | Down |  Up  | Right|      |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |      | PgDn |      |      |      |        |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |   =  |                                       |      |      |      |      |      |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |      |      |       |      |      |
- *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |      |
- *                                 |  Spc | Ent  |------|       |------| Bksp | Del  |
- *                                 |      |      |      |       |      |      |      |
- *                                 `--------------------'       `--------------------'
+ * ,--------------------------------------------------.        ,--------------------------------------------------.
+ * |   ~    |  F1  |  F2  |  F3  |  F4  |  F5  |  ~   |       |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
+ * |--------+------+------+------+------+-------------|       |------+------+------+------+------+------+--------|
+ * |   `    |   !  |   @  |   |  |   {  |   }  |      |       |      | Home | PgUp |  End |      |      |   F12  |
+ * |--------+------+------+------+------+------|      |       |      |------+------+------+------+------+--------|
+ * |        |   #  |   $  |   ~  |   (  |   )  |------|       |------| Left | Down |  Up  | Right|      |        |
+ * |--------+------+------+------+------+------|      |       |      |------+------+------+------+------+--------|
+ * |        |   %  |   ^  |   &  |   [  |   ]  |  ~   |       |      |      | PgDn |      |      |      |        |
+ * `--------+------+------+------+------+-------------'       `-------------+------+------+------+------+--------'
+ *   |      |      |      |      |   =  |                                   |      |      |      |      |      |
+ *   `----------------------------------'                                   `----------------------------------'
+ *                                        ,-------------.   ,-------------.
+ *                                        |      |      |   |      |      |
+ *                                 ,------|------|------|   |------+------+------.
+ *                                 |      |      |      |   |      |      |      |
+ *                                 |  Spc | Del  |------|   |------| Bksp | Ent  |
+ *                                 |      |      |      |   |      |      |      |
+ *                                 `--------------------'   `--------------------'
  */
 // SYMBOLS
 [SYMB] = KEYMAP(
        // left hand
-       KC_TRNS,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_TRNS,
-       KC_GRAVE, KC_EXLM,  KC_AT,    KC_LCBR,  KC_RCBR,  KC_PIPE,  KC_TRNS,
-       KC_TRNS,  KC_HASH,  KC_DLR,   KC_LPRN,  KC_RPRN,  KC_AMPR,
-       KC_TRNS,  KC_PERC,  KC_CIRC,  KC_LBRC,  KC_RBRC,  KC_TILD,  KC_TRNS,
+       KC_TRNS,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_TILD,
+       KC_GRAVE, KC_EXLM,  KC_AT,    KC_PIPE,  KC_LCBR,  KC_RCBR,  KC_TRNS,
+       KC_TRNS,  KC_HASH,  KC_DLR,   KC_TILD,  KC_LPRN,  KC_RPRN,  
+       KC_TRNS,  KC_PERC,  KC_CIRC,  KC_AMPR,  KC_LBRC,  KC_RBRC,  KC_TILD,
        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_EQL,  
 
                                      KC_TRNS,  KC_TRNS,
                                                KC_TRNS,
-                           KC_SPC,   KC_ENT,   KC_TRNS,
+                           KC_SPC,   KC_DEL,   KC_TRNS,
 
        // right hand
        KC_TRNS,  KC_F6,    KC_F7,    KC_F8,    KC_F9,     KC_F10,   KC_F11,
@@ -114,18 +115,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
        KC_TRNS, KC_TRNS,
        KC_TRNS,
-       KC_TRNS, KC_BSPC, KC_DEL
+       KC_TRNS, KC_BSPC, KC_ENT
 ),
 /* Keymap 2: Media and mouse keys
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      | Mup  | Expl |      |      |      |           |      |      |      |      |      |      |        |
+ * |        |      | Mup  | Expl |      |      |      |           |      |      | PgUp |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |GuiLft|GuiDwn|GuiRgt|      |      |------|           |------| Left | Down |  Up  |Right |      |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |VolDwn|VolUp | Mute |      |        |
+ * |        |      |      |      |      |      |      |           |      |      | Mute |VDown | VUp  |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      |      |      | Lclk | Rclk |                                       | Play | Prev | Next |      |      |
  *   `----------------------------------'                                       `----------------------------------'
@@ -149,9 +150,9 @@ KEYMAP(
                                   KC_BTN1, KC_BTN2, KC_TRNS,
     // right hand
        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS,
-       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS,
+       KC_TRNS,  KC_TRNS, KC_PGUP, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS,
                  KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_TRNS, KC_TRNS,
-       KC_TRNS,  KC_TRNS, KC_VOLD, KC_VOLU, KC_MUTE,  KC_TRNS, KC_TRNS,
+       KC_TRNS,  KC_TRNS, KC_MUTE, KC_VOLD, KC_VOLU,  KC_TRNS, KC_TRNS,
                           KC_MPLY, KC_MPRV, KC_MNXT,  KC_TRNS, KC_TRNS,
        KC_TRNS,  KC_TRNS,
        KC_TRNS,
