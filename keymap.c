@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|       |------+------+------+------+------+------+--------|
  * |   `    |   !  |   @  |   |  |   {  |   }  |      |       |      | Home | PgUp |  End |      |      |   F12  |
  * |--------+------+------+------+------+------|      |       |      |------+------+------+------+------+--------|
- * |        |   #  |   $  |   ~  |   (  |   )  |------|       |------| Left | Down |  Up  | Right|      |        |
+ * |        |   #  |   $  | PgUp |   (  |   )  |------|       |------| Left | Down |  Up  | Right|      |        |
  * |--------+------+------+------+------+------|      |       |      |------+------+------+------+------+--------|
  * |        |   %  |   ^  |   &  |   [  |   ]  |  ~   |       |      |      | PgDn |      |      |      |        |
  * `--------+------+------+------+------+-------------'       `-------------+------+------+------+------+--------'
@@ -98,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        // left hand
        KC_TRNS,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_TILD,
        KC_GRAVE, KC_EXLM,  KC_AT,    KC_PIPE,  KC_LCBR,  KC_RCBR,  KC_TRNS,
-       KC_TRNS,  KC_HASH,  KC_DLR,   KC_TILD,  KC_LPRN,  KC_RPRN,  
+       KC_TRNS,  KC_HASH,  KC_DLR,   KC_PGDN,  KC_LPRN,  KC_RPRN,  
        KC_TRNS,  KC_PERC,  KC_CIRC,  KC_AMPR,  KC_LBRC,  KC_RBRC,  KC_TILD,
        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_EQL,  
 
@@ -124,9 +124,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |        |      | Mup  | Expl |      |      |      |           |      |      | PgUp |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |GuiLft|GuiDwn|GuiRgt|      |      |------|           |------| Left | Down |  Up  |Right |      |
+ * | ScrlUp |GuiLft|GuiDwn|GuiRgt|      |      |------|           |------| Left | Down |  Up  |Right |      |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      | Mute |VDown | VUp  |      |        |
+ * | ScrlDn |      |      |      |      |      |      |           |      |      | Mute |VDown | VUp  |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      |      |      | Lclk | Rclk |                                       | Play | Prev | Next |      |      |
  *   `----------------------------------'                                       `----------------------------------'
@@ -142,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 KEYMAP(
          RESET, KC_TRNS,     KC_TRNS,  KC_TRNS,     KC_TRNS, KC_TRNS,    KC_TRNS,
        KC_TRNS, KC_TRNS,     KC_MS_U,  KC_TRNS,     KC_BTN1, LGUI(KC_T), KC_TRNS,
-       KC_WH_U, KC_MS_L,     KC_MS_D,  KC_MS_R,     KC_MS_D, KC_MS_R,
+       KC_WH_U, KC_MS_L,     KC_MS_D,  KC_MS_R,     KC_TRNS, KC_TRNS,
        KC_WH_D, KC_TRNS,     KC_TRNS,  KC_TRNS,     KC_TRNS, KC_TRNS,    KC_TRNS,
        KC_TRNS, KC_TRNS,     KC_TRNS,  KC_TRNS,     KC_TRNS,
                                            KC_TRNS, KC_TRNS,
@@ -216,7 +216,6 @@ void matrix_init_user(void) {
 
 // Runs constantly in the background, in a loop.
 void matrix_scan_user(void) {
-
     uint8_t layer = biton32(layer_state);
 
     ergodox_board_led_off();
