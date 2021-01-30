@@ -30,11 +30,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   |  L2  |      | Alt  | Ctrl | LGui |                                 |  Esc |  { [ |  ] ] | + =  |  L2  | 
  *   `----------------------------------'                                 `----------------------------------'
  *                                      ,--------------.   ,--------------.
- *                                      |  Esc  | Ctrl |   | Ctrl |  Esc  |
+ *                                      |  Esc  | Ctrl |   | Left | Right |
  *                               ,------|-------|------|   |------+-------+------.
- *                               |      |       |  Alt |   | Alt  |       |      |
- *                               |  Ent | Bksp  |------|   |------|  Del  | Spc  |
- *                               |      |       | Ctrl |   | Ctrl |       |      |
+ *                               |      |       |  Alt |   |  Up  |       |      |
+ *                               |  Spc | Bksp  |------|   |------|  Ent  | Spc  |
+ *                               |      |       | Ctrl |   | Down |       |      |
  *                               `---------------------'   `---------------------'
  */
 /*
@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                                                                KC_HOME,  KC_END,
                                                                          KC_PGUP,
-                                                       KC_ENT,  KC_BSPC, KC_PGDN,
+                                                       KC_SPC,  KC_BSPC, KC_PGDN,
 
   // right hand
   KC_MINS,     KC_6,     KC_7,           KC_8,        KC_9,     KC_0,              KC_BSPC,
@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   KC_LEFT,    KC_RIGHT,
   KC_UP,
-  KC_DOWN,    KC_DEL,  KC_SPC
+  KC_DOWN,    KC_ENT, KC_SPC
 ),
 /* Keymap 1: Symbol Layer
  *
